@@ -20,7 +20,7 @@ Because of these two points, most contributions are more useful as issues than a
 
 ## The best way to contribute: open an issue
 
-Please [open an issue](../../issues) is you find:
+Please [open an issue](../../issues) if you find:
 -  A typo or confusing explanation
 -  A bug in the OS's code
 -  A technical inaccuracy
@@ -49,7 +49,7 @@ Using AI as a tool for learning and problem-solving is fine. For example, you ma
 -   Ask AI questions about concepts you are working on
 -   Discuss design decisions and possible approaches
 -   Ask for explanations of things you are unsure of
--   use it to help identify mistakes or gaps
+-   Use it to help identify mistakes or gaps
 
 Please do not use AI to generate a contribution and then submit the output with little or no meaningful understanding or review. If a 
 contribution is substantially AI-generated, it may be rejected.
