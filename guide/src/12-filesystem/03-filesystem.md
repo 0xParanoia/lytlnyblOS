@@ -107,7 +107,7 @@ Let's look at `fs_layout.h`:
 #define FS_TYPE_FILE 1
 #define FS_TYPE_DIRECTORY 2
 
-#define FS_INODE_MAX_BLOCKS 10
+#define FS_INODE_MAX_BLOCKS 20
 #define FS_TOTAL_BLOCKS 1000
 #define FS_TOTAL_INODES 128
 
@@ -168,7 +168,7 @@ number of blocks that an inode can point to, the maximum number of blocks that a
 and finally the total number of inodes for the whole filesystem.
 
 >**_NOTE:_** When writing any programs, you should be mindful of the 
-`FS_INODE_MAX_BLOCKS` value. `10 x 512 bytes` is 5120 bytes, so this will become
+`FS_INODE_MAX_BLOCKS` value. `20 x 512 bytes` is 10240 bytes, so this will become
 the greatest size for any programs or files you eventually store in the filesystem 
 unless you change this.
 
@@ -187,7 +187,7 @@ The superblock contains:
 -   size of each block and the total blocks
 -   The start of the bitmap, mirrors `FS_BITMAP_BLOCK`
 -   The start of the inode block, the count of inodes (128), 
-    the number of blocks that an inode can link to (10) and 
+    the number of blocks that an inode can link to (20) and 
     the index for the root inode.
 -   And then we have data that will get frequently updated such as
     the number of free blocks and free inodes
