@@ -150,8 +150,7 @@ void syscall_handler(registers_t* regs) {
                 break;
             }
 
-            ((char*) buffer)[count] = '\0';
-            vga_text_write(&terminal, (char*)buffer);
+            vga_text_writelength(&terminal, (char*)buffer, count);
             
             regs->eax = (int)count;
             break;

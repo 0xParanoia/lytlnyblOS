@@ -73,6 +73,12 @@ void vga_text_writeline(
     const char* string
 );
 
+void vga_text_writelength( 
+    vga_text* terminal,
+    const char* string,
+    size_t length
+);
+
 /* num out */
 void vga_text_write_dec(
     vga_text* terminal,

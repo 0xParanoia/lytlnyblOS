@@ -37,5 +37,6 @@ syscall
 syscalls
 Tanenbaum
 unmapping
+userspace
 variadic
 VMM's
