@@ -277,8 +277,7 @@ void syscall_handler(registers_t* regs) {
                 break;
             }
 
-            ((char*) buffer)[count] = '\0';
-            vga_text_write(&terminal, (char*)buffer);
+            vga_text_writelength(&terminal, (char*)buffer, count);
             
             regs->eax = (int)count;
             break;
@@ -368,12 +367,32 @@ ready.
 As the comment states, it's a pretty mock version that writes based on the requested
 size, as a `write` syscall typically does. After this function we can
 basically set the privilege level of the VGA buffer back to 0 as we now have
-a better way to write to VGA.
+a better way to write to VGA other than directly editing it in userspace.
 
-> **_NOTE:_** This implementation writes a null terminator at `buffer[count]`, so the
-supplied buffer must have room for one extra byte. This is a simplification for 
-terminal output implementation and is not how the general `write` syscall should be
-implemented
+For `SYSCALL_WRITE`, we have created a new VGA function. Here's a look at the code for it:
+```c
+void vga_text_writelength(vga_text* terminal, const char* string, size_t length) {
+    size_t pos = terminal->row * terminal->width + terminal->column;
+
+    for (size_t i = 0; i < length; i++) {
+        if (string[i] == '\n') {
+            vga_text_writeline(terminal, "");
+            continue;
+        }
+        vga_text_putchar(terminal, string[i]);
+        pos++;
+        terminal->row = pos / terminal->width;
+        terminal->column = pos % terminal->width;
+        terminal->row = terminal->row % terminal->height;
+    } 
+}
+```
+
+This is pretty much the same as `vga_text_write`, but just has `i < length` as the condition instead of checking
+for the null terminator. We use the length instead of relying on a null terminator because the system call
+receives a buffer and a byte count from userspace. This buffer is not guaranteed to be null terminated. If we
+instead use the regular `vga_text_write` and just append a null character to the end. We may write outside the allocated
+buffer, causing memory corruption, or a kernel crash.
 
 > **_NOTE:_** An important limitation exists with this: the kernel
 is directly de-referencing the user-provided buffer. A real operating system cannot simply

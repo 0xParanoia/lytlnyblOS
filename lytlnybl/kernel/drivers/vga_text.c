@@ -75,6 +75,22 @@ void vga_text_writeline(vga_text* terminal, const char* string) {
     terminal->row = terminal->row % terminal->height;
 }
 
+void vga_text_writelength(vga_text* terminal, const char* string, size_t length) {
+    size_t pos = terminal->row * terminal->width + terminal->column;
+
+    for (size_t i = 0; i < length; i++) {
+        if (string[i] == '\n') {
+            vga_text_writeline(terminal, "");
+            continue;
+        }
+        vga_text_putchar(terminal, string[i]);
+        pos++;
+        terminal->row = pos / terminal->width;
+        terminal->column = pos % terminal->width;
+        terminal->row = terminal->row % terminal->height;
+    } 
+}
+
 void vga_text_write_dec(vga_text* terminal, uint32_t value) {
     char buffer[10];
     size_t digits = 0;
