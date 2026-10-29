@@ -303,7 +303,7 @@ void init_pmm() {
 
     //kernel 
     uint32_t kernel_frame_index = (uint32_t)&_kernel_start / FRAME_SIZE;
-    uint32_t kernel_frame_end = (uint32_t)&_kernel_end / FRAME_SIZE;
+    uint32_t kernel_frame_end = (uint32_t)(&_kernel_end + FRAME_SIZE - 1) / FRAME_SIZE;
 
     for (; kernel_frame_index < kernel_frame_end; kernel_frame_index++) {
         bitmap_set_frame(kernel_frame_index);

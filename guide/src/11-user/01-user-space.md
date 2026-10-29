@@ -428,7 +428,7 @@ void context_switch(process_t* old_process, process_t* new_process, registers_t*
 
     if (new_process->type == PROCESS_USER) {  
         tss.esp0 = (uintptr_t)(new_process->kstack) + KERNEL_STACK_SIZE;
-        set_cr3((uintptr_t)new_process->page_directory);
+        set_cr3((uintptr_t)get_physical_address(kernel_directory, (uintptr_t)new_process->page_directory));
     } else if (new_process->type == PROCESS_KERNEL) {
         set_cr3((uintptr_t)kernel_directory);
     }
