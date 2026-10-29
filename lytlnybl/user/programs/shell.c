@@ -17,7 +17,7 @@ void start(void) {
     input[strlen(input) - 1] = '\0';
 
     //Eval
-    size_t word_count;
+    size_t word_count = 0;
     char** words = tokenize_line(input, &word_count);
     //printf("we typed: %s, %d, %d, %s\n", input, strlen(input), word_count, words[0]);
 
