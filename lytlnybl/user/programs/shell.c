@@ -30,9 +30,6 @@ void start(void) {
     memset(input, 0, strlen(input));
     word_count = 0;
     free(words);
-
-
-    
   }
 }
 
